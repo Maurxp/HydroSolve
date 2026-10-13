@@ -114,7 +114,7 @@ export const IterationSummaryCard: React.FC<IterationSummaryCardProps> = ({
       </div>
 
       {/* Sustitución numérica de la fórmula de Falsa Posición */}
-      <div style={{ background: 'rgba(14, 23, 42, 0.85)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)' }}>
+      <div style={{ background: 'rgba(14, 23, 42, 0.85)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)', minWidth: 0, maxWidth: '100%', overflow: 'hidden' }}>
         <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <Gauge size={14} color="var(--cyan-400)" />
           <span>Fórmula de Regula Falsi evaluada en el paso actual:</span>

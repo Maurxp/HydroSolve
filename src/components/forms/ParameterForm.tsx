@@ -32,57 +32,40 @@ export const ParameterForm: React.FC<ParameterFormProps> = ({
     });
   };
 
-  const loadPreset = (presetName: string) => {
-    if (presetName === 'base') {
-      onChange({
-        Q: 12.0,
-        b: 3.0,
-        z: 1.5,
-        S: 0.001,
-        n: 0.025,
-        a: 1.0,
-        b0: 2.0,
-        tolerance: 0.01,
-        maxIterations: 50,
-      });
-    } else if (presetName === 'riego') {
-      onChange({
-        Q: 4.5,
-        b: 2.0,
-        z: 1.0,
-        S: 0.0008,
-        n: 0.02,
-        a: 0.5,
-        b0: 2.0,
-        tolerance: 0.01,
-        maxIterations: 50,
-      });
-    } else if (presetName === 'pluvial') {
-      onChange({
-        Q: 25.0,
-        b: 4.5,
-        z: 2.0,
-        S: 0.002,
-        n: 0.015,
-        a: 0.8,
-        b0: 2.5,
-        tolerance: 0.01,
-        maxIterations: 50,
-      });
-    } else if (presetName === 'rectangular') {
-      onChange({
-        Q: 15.0,
-        b: 4.0,
-        z: 0.0,
-        S: 0.0015,
-        n: 0.018,
-        a: 0.8,
-        b0: 2.8,
-        tolerance: 0.01,
-        maxIterations: 50,
-      });
-    }
-  };
+
+
+  const presets = [
+    {
+      id: 'base',
+      title: 'Problema Académico',
+      param: 'Q = 12 m³/s',
+      check: (p: ChannelParameters) => p.Q === 12.0 && p.b === 3.0 && p.z === 1.5 && p.S === 0.001 && p.n === 0.025,
+      params: { Q: 12.0, b: 3.0, z: 1.5, S: 0.001, n: 0.025, a: 1.0, b0: 2.0, tolerance: 0.01, maxIterations: 50 },
+    },
+    {
+      id: 'riego',
+      title: 'Canal de Riego',
+      param: 'Q = 4.5 m³/s',
+      check: (p: ChannelParameters) => p.Q === 4.5 && p.b === 2.0 && p.z === 1.0 && p.S === 0.0008 && p.n === 0.02,
+      params: { Q: 4.5, b: 2.0, z: 1.0, S: 0.0008, n: 0.02, a: 0.5, b0: 2.0, tolerance: 0.01, maxIterations: 50 },
+    },
+    {
+      id: 'pluvial',
+      title: 'Canal Pluvial',
+      param: 'Q = 25 m³/s',
+      check: (p: ChannelParameters) => p.Q === 25.0 && p.b === 4.5 && p.z === 2.0 && p.S === 0.002 && p.n === 0.015,
+      params: { Q: 25.0, b: 4.5, z: 2.0, S: 0.002, n: 0.015, a: 0.8, b0: 2.5, tolerance: 0.01, maxIterations: 50 },
+    },
+    {
+      id: 'rectangular',
+      title: 'Canal Rectangular',
+      param: 'z = 0',
+      check: (p: ChannelParameters) => p.Q === 15.0 && p.b === 4.0 && p.z === 0.0 && p.S === 0.0015 && p.n === 0.018,
+      params: { Q: 15.0, b: 4.0, z: 0.0, S: 0.0015, n: 0.018, a: 0.8, b0: 2.8, tolerance: 0.01, maxIterations: 50 },
+    },
+  ];
+
+  const activePresetId = presets.find((pr) => pr.check(params))?.id;
 
   return (
     <div className="glass-card" style={{ padding: 'clamp(1rem, 3vw, 1.75rem)' }} id="panel-parametros">
@@ -117,21 +100,39 @@ export const ParameterForm: React.FC<ParameterFormProps> = ({
         </div>
       </div>
 
-      {/* Presets Rápidos */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
-        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>Casos de Estudio:</span>
-        <button type="button" className="btn btn-secondary btn-sm" style={{ padding: '0.25rem 0.65rem', fontSize: '0.78rem' }} onClick={() => loadPreset('base')}>
-          Problema Académico (Q=12 m³/s)
-        </button>
-        <button type="button" className="btn btn-secondary btn-sm" style={{ padding: '0.25rem 0.65rem', fontSize: '0.78rem' }} onClick={() => loadPreset('riego')}>
-          Canal de Riego (Q=4.5 m³/s)
-        </button>
-        <button type="button" className="btn btn-secondary btn-sm" style={{ padding: '0.25rem 0.65rem', fontSize: '0.78rem' }} onClick={() => loadPreset('pluvial')}>
-          Canal Pluvial (Q=25 m³/s)
-        </button>
-        <button type="button" className="btn btn-secondary btn-sm" style={{ padding: '0.25rem 0.65rem', fontSize: '0.78rem' }} onClick={() => loadPreset('rectangular')}>
-          Canal Rectangular (z = 0)
-        </button>
+      {/* Casos de Estudio Uniformes y Responsivos (Problema B) */}
+      <div className="case-studies-container">
+        <div className="case-studies-header">
+          <span className="case-studies-label">
+            <Sparkles size={13} color="var(--cyan-400)" />
+            Casos de Estudio Preconfigurados:
+          </span>
+        </div>
+        <div className="case-studies-grid">
+          {presets.map((preset) => {
+            const isSelected = activePresetId === preset.id;
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                className={`case-study-card ${isSelected ? 'selected' : ''}`}
+                onClick={() => onChange(preset.params)}
+                aria-pressed={isSelected}
+                title={`Cargar caso de estudio: ${preset.title} (${preset.param})`}
+              >
+                <div className="case-study-card-title">
+                  <span>{preset.title}</span>
+                  {isSelected && (
+                    <span style={{ fontSize: '0.68rem', color: 'var(--cyan-300)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                      <CheckCircle2 size={11} color="var(--cyan-400)" /> Activo
+                    </span>
+                  )}
+                </div>
+                <span className="case-study-card-param">{preset.param}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Formulario en Grid */}

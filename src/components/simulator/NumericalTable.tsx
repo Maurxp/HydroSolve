@@ -181,6 +181,10 @@ export const NumericalTable: React.FC<NumericalTableProps> = ({
         </table>
       </div>
 
+      <div className="table-scroll-hint">
+        <span>↔ Desliza horizontalmente para consultar todas las columnas de la tabla</span>
+      </div>
+
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
         <span>Haga clic en cualquier fila para sincronizar instantáneamente el canal, las gráficas y el desarrollo matemático con esa iteración.</span>
         <span>Total de pasos: <strong>{result.iterations.length}</strong></span>

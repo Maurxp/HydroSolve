@@ -72,12 +72,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
           </p>
 
           {/* Botones de acción rápida */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', minWidth: 0, maxWidth: '100%' }}>
             <button
               type="button"
               className="btn btn-primary"
               onClick={onStartSimulation}
-              style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem' }}
+              style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', maxWidth: '100%' }}
             >
               <Activity size={18} /> Iniciar Simulación Numérica
             </button>
@@ -85,7 +85,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
             <a
               href="#desarrollo-matematico"
               className="btn btn-secondary"
-              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem' }}
+              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem', maxWidth: '100%', textAlign: 'center' }}
             >
               Ver Desarrollo Matemático (15 Pasos)
             </a>
@@ -93,7 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
             <a
               href="#fundamentos-teoricos"
               className="btn btn-secondary"
-              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem' }}
+              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem', maxWidth: '100%', textAlign: 'center' }}
             >
               Fundamentos Teóricos
             </a>

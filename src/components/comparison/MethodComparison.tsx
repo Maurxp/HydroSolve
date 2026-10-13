@@ -110,8 +110,12 @@ export const MethodComparison: React.FC<MethodComparisonProps> = ({
         </table>
       </div>
 
+      <div className="table-scroll-hint">
+        <span>↔ Desliza horizontalmente para ver la comparativa completa de métodos</span>
+      </div>
+
       {/* Análisis Académico Comparativo (Sin declarar un ganador universal) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
         <div style={{ background: 'rgba(10, 17, 32, 0.75)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)' }}>
           <h4 style={{ fontSize: '0.92rem', color: 'var(--cyan-300)', marginBottom: '0.4rem' }}>
             Falsa Posición (Regula Falsi)

@@ -23,7 +23,7 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
   const freeboardRec = Math.max(0.3, props.y * 0.3); // Recomendación de borde libre
 
   return (
-    <div className="glass-card" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }} id="panel-resultados">
+    <div className="glass-card" style={{ padding: 'clamp(1rem, 3vw, 1.75rem)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }} id="panel-resultados">
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -45,13 +45,13 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </div>
       </div>
 
-      {/* Tarjetas métricas clave */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '1rem' }}>
+      {/* Tarjetas métricas clave (Problema C) */}
+      <div className="results-metrics-grid">
         {/* Tirante Normal yn */}
-        <div style={{ background: 'rgba(6, 182, 212, 0.08)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(6, 182, 212, 0.35)' }}>
+        <div className="results-metric-card" style={{ background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.35)' }}>
           <div style={{ fontSize: '0.76rem', color: 'var(--cyan-300)', marginBottom: '0.2rem' }}>Tirante Normal Calculado (y_n)</div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--cyan-200)', fontFamily: 'var(--font-mono)' }}>
-            {formatNumber(root, 4)} <span style={{ fontSize: '0.9rem', color: 'var(--cyan-400)' }}>m</span>
+          <div style={{ fontSize: 'clamp(1.35rem, 4vw, 1.75rem)', fontWeight: 800, color: 'var(--cyan-200)', fontFamily: 'var(--font-mono)' }}>
+            {formatNumber(root, 4)} <span style={{ fontSize: '0.85rem', color: 'var(--cyan-400)' }}>m</span>
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
             Intervalo inicial: [{params.a}, {params.b0}] m
@@ -59,10 +59,10 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </div>
 
         {/* Caudal Comprobado Manning */}
-        <div style={{ background: 'rgba(10, 17, 32, 0.75)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)' }}>
+        <div className="results-metric-card" style={{ background: 'rgba(10, 17, 32, 0.75)', border: '1px solid var(--card-border)' }}>
           <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>Caudal Calculado Q_c(y_n)</div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--emerald-400)', fontFamily: 'var(--font-mono)' }}>
-            {formatNumber(props.Qc, 4)} <span style={{ fontSize: '0.9rem', color: 'var(--emerald-500)' }}>m³/s</span>
+          <div style={{ fontSize: 'clamp(1.35rem, 4vw, 1.75rem)', fontWeight: 800, color: 'var(--emerald-400)', fontFamily: 'var(--font-mono)' }}>
+            {formatNumber(props.Qc, 4)} <span style={{ fontSize: '0.85rem', color: 'var(--emerald-500)' }}>m³/s</span>
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
             Caudal de diseño: {params.Q} m³/s (Δ = {Math.abs(finalResidual).toExponential(3)})
@@ -70,9 +70,9 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </div>
 
         {/* Iteraciones y Error */}
-        <div style={{ background: 'rgba(10, 17, 32, 0.75)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)' }}>
+        <div className="results-metric-card" style={{ background: 'rgba(10, 17, 32, 0.75)', border: '1px solid var(--card-border)' }}>
           <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>Iteraciones Ejecutadas</div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ fontSize: 'clamp(1.35rem, 4vw, 1.75rem)', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
             {totalIterations} <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>pasos</span>
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
@@ -81,9 +81,9 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </div>
 
         {/* Régimen de Flujo y Froude */}
-        <div style={{ background: 'rgba(10, 17, 32, 0.75)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--card-border)' }}>
+        <div className="results-metric-card" style={{ background: 'rgba(10, 17, 32, 0.75)', border: '1px solid var(--card-border)' }}>
           <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>Número de Froude (Fr)</div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: props.regime === 'Subcrítico' ? 'var(--blue-400)' : 'var(--amber-400)', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ fontSize: 'clamp(1.35rem, 4vw, 1.75rem)', fontWeight: 800, color: props.regime === 'Subcrítico' ? 'var(--blue-400)' : 'var(--amber-400)', fontFamily: 'var(--font-mono)' }}>
             {formatNumber(props.Fr, 3)}
           </div>
           <div style={{ fontSize: '0.78rem', color: props.regime === 'Subcrítico' ? 'var(--blue-300)' : 'var(--amber-300)', marginTop: '0.2rem', fontWeight: 600 }}>
@@ -92,31 +92,31 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </div>
       </div>
 
-      {/* Parámetros Hidráulicos Complementarios */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.85rem' }}>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+      {/* Parámetros Hidráulicos Complementarios (Problema C) */}
+      <div className="results-props-grid">
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Velocidad media (V)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.V, 3)} m/s</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.V, 3)} m/s</div>
         </div>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Área hidráulica (A)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.A, 3)} m²</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.A, 3)} m²</div>
         </div>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Radio hidráulico (R)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.R, 3)} m</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.R, 3)} m</div>
         </div>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Espejo de agua (T)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.T, 3)} m</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.T, 3)} m</div>
         </div>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Energía específica (E)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.E, 3)} m</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.E, 3)} m</div>
         </div>
-        <div style={{ background: 'rgba(14, 23, 42, 0.6)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)' }}>
+        <div className="results-prop-card">
           <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Tensión de corte (τ₀)</div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{formatNumber(props.shearStress, 2)} N/m²</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{formatNumber(props.shearStress, 2)} N/m²</div>
         </div>
       </div>
 

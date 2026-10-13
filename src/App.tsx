@@ -218,7 +218,7 @@ export const App: React.FC = () => {
               isConverged={result.status.startsWith('CONVERGED') && currentIndex === result.iterations.length - 1}
             />
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', minWidth: 0, maxWidth: '100%' }}>
               <IterationSimulator
                 currentIndex={currentIndex}
                 totalIterations={result.iterations.length}
