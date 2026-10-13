@@ -3,6 +3,8 @@
 > **Laboratorio Digital Interactivo de Métodos Numéricos e Hidráulica de Canales**<br>
 > Resolución analítico-numérica del tirante normal en canales trapezoidales mediante la ecuación de Manning, simulación paso a paso con el método de **Falsa Posición** (*Regula Falsi*) y contrastación algorítmica con **Bisección** y **Newton-Raphson**.
 
+🔗 **Sitio web en producción:** [https://hydrosolve.usco.cloud/](https://hydrosolve.usco.cloud/)
+
 ---
 
 ## 📌 Descripción
@@ -229,20 +231,20 @@ HydroSolve/
 
 HydroSolve es una Single Page Application (SPA) cliente estática que no requiere servidores backend ni bases de datos activas en tiempo de ejecución.
 
-**Cloudflare Pages** es la plataforma principal prevista para alojar y servir la aplicación en producción bajo una red global CDN de alta velocidad:
+La aplicación se encuentra desplegada y operativa en producción en **Cloudflare Pages**, con integración continua (CI/CD) vinculada al repositorio de GitHub:
 
-| Parámetro | Configuración Prevista |
+| Parámetro | Configuración de Producción |
 | :--- | :--- |
-| **Repositorio** | `Maurxp/HydroSolve` |
+| **Repositorio conectado** | [`Maurxp/HydroSolve`](https://github.com/Maurxp/HydroSolve) |
 | **Rama de producción** | `main` |
-| **Comando de compilación** | `npm run build` |
-| **Directorio de salida (Output directory)** | `dist` |
+| **Comando de compilación** | `npm run build` (`tsc -b && vite build`) |
+| **Directorio de salida (Publish directory)** | `dist` |
 | **Variable de entorno del runner** | `NODE_VERSION = 20` |
-| **Dominio personalizado previsto** | `https://hydrosolve.usco.cloud` |
+| **Dominio de producción activo** | [https://hydrosolve.usco.cloud/](https://hydrosolve.usco.cloud/) |
 
-> **Nota sobre el estado de despliegue:** La aplicación está preparada técnicamente para su empaquetado estático. El despliegue formal en Cloudflare Pages y la vinculación de los registros DNS del subdominio institucional se completarán en la siguiente etapa del proyecto.
->
-> *Configuración residual:* El repositorio conserva el archivo `netlify.toml` como configuración alternativa para despliegues estáticos en Netlify sin interferir con Cloudflare Pages.
+Cada actualización (*push*) a la rama `main` compila y publica automáticamente la versión más reciente en la red perimetral de Cloudflare Pages.
+
+> **Configuración residual:** El repositorio conserva el archivo `netlify.toml` como soporte alternativo de despliegue estático sin interferir con Cloudflare Pages.
 
 ---
 
@@ -261,7 +263,7 @@ Para consultar el marco teórico formal, el desarrollo numérico detallado y las
 
 | Categoría | Herramienta | Utilidad en el Proyecto |
 | :--- | :--- | :--- |
-| **Entorno y Lenguaje** | [React 19](https://react.dev/) + [TypeScript 5](https://www.typescriptlang.org/) | Construcción de interfaz basada en componentes reactivos con tipado estático estricto. |
+| **Entorno y Lenguaje** | [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) | Construcción de interfaz basada en componentes reactivos con tipado estático estricto. |
 | **Empaquetador** | [Vite 8](https://vite.dev/) | Entorno de desarrollo ultrarrápido con HMR y compilación optimizada para producción. |
 | **Notación Matemática** | [KaTeX](https://katex.org/) | Renderizado tipográfico rápido y accesible de fórmulas matemáticas LaTeX. |
 | **Iconografía e Interacción** | [Lucide React](https://lucide.dev/) + [Canvas Confetti](https://www.npmjs.com/package/canvas-confetti) | Iconos vectoriales limpios y animaciones de celebración ante convergencia exitosa. |
