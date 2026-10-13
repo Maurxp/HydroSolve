@@ -59,6 +59,25 @@ export const ConvergenceChart: React.FC<ConvergenceChartProps> = ({
   // Posición Y de la línea de tolerancia
   const tolY = mapY(tolerance);
 
+  // Posicionamiento inteligente y anti-solapamiento de la etiqueta de tolerancia
+  const tolBadgeWidth = 144;
+  const tolBadgeHeight = 22;
+  const tolBadgeHalfWidth = tolBadgeWidth / 2;
+
+  // Comprobar si los últimos puntos de convergencia caen en la esquina derecha cerca de tolY
+  const lastPoint = validPoints[validPoints.length - 1];
+  const lastPointPx = lastPoint ? mapX(lastPoint.iteration) : 0;
+  const lastPointPy = lastPoint ? mapY(lastPoint.approxRelativeError!) : 0;
+  const hasRightCollision = lastPoint && lastPointPx >= width - margin.right - 160 && Math.abs(lastPointPy - tolY) < 30;
+
+  // Si hay colisión a la derecha con los puntos que alcanzan la tolerancia, ubicar etiqueta a la izquierda
+  const tolBadgeX = hasRightCollision ? margin.left + 12 : width - margin.right - tolBadgeWidth - 6;
+
+  // Posicionamiento vertical: si está muy cerca del borde superior, ubicar debajo de la línea
+  const tolBadgeY = tolY <= margin.top + 24
+    ? tolY + 6
+    : (tolY - 24 >= margin.top + 2 ? tolY - 24 : tolY + 6);
+
   // Path SVG para la curva de error
   const pathD = validPoints.reduce((acc, it, idx) => {
     const xPx = mapX(it.iteration);
@@ -118,7 +137,7 @@ export const ConvergenceChart: React.FC<ConvergenceChartProps> = ({
           {/* Grid de fondo */}
           <rect x={margin.left} y={margin.top} width={innerWidth} height={innerHeight} fill="url(#gridPatternConv)" />
 
-          {/* Línea horizontal de tolerancia de parada ε */}
+          {/* Línea horizontal de tolerancia de parada ε con etiqueta de alto contraste */}
           {tolY >= margin.top && tolY <= height - margin.bottom && (
             <g>
               <line
@@ -130,8 +149,25 @@ export const ConvergenceChart: React.FC<ConvergenceChartProps> = ({
                 strokeWidth="1.8"
                 strokeDasharray="5 3"
               />
-              <rect x={width - margin.right - 140} y={tolY - 18} width="135" height="16" rx="3" fill="var(--bg-dark-900)" />
-              <text x={width - margin.right - 5} y={tolY - 6} fill="var(--emerald-300)" fontSize="10" fontWeight="600" textAnchor="end" fontFamily="var(--font-mono)">
+              <rect
+                x={tolBadgeX}
+                y={tolBadgeY}
+                width={tolBadgeWidth}
+                height={tolBadgeHeight}
+                rx="4"
+                fill="rgba(10, 17, 32, 0.95)"
+                stroke="var(--emerald-400)"
+                strokeWidth="1.3"
+              />
+              <text
+                x={tolBadgeX + tolBadgeHalfWidth}
+                y={tolBadgeY + 15}
+                fill="#ffffff"
+                fontSize="10"
+                fontWeight="700"
+                textAnchor="middle"
+                fontFamily="var(--font-mono)"
+              >
                 Tolerancia ε = {tolerance}%
               </text>
             </g>
@@ -149,12 +185,14 @@ export const ConvergenceChart: React.FC<ConvergenceChartProps> = ({
             />
           )}
 
-          {/* Puntos de cada iteración */}
+          {/* Puntos de cada iteración con etiquetas de alto contraste */}
           {validPoints.map((it) => {
             const xPx = mapX(it.iteration);
             const yPx = mapY(it.approxRelativeError!);
             const isSelected = it.iteration === currentIterationIndex + 1;
             const isHovered = hoveredIter?.iteration === it.iteration;
+            // Evitar que el texto quede recortado en el borde superior
+            const labelY = yPx - 10 < margin.top + 10 ? yPx + 17 : yPx - 10;
 
             return (
               <g
@@ -174,7 +212,23 @@ export const ConvergenceChart: React.FC<ConvergenceChartProps> = ({
                   stroke="var(--bg-dark-900)"
                   strokeWidth="2"
                 />
-                <text x={xPx} y={yPx - 10} fill="#cbd5e1" fontSize="9" textAnchor="middle" fontFamily="var(--font-mono)">
+                <rect
+                  x={xPx - 27}
+                  y={labelY - 10}
+                  width="54"
+                  height="13"
+                  rx="3"
+                  fill="rgba(10, 17, 32, 0.88)"
+                />
+                <text
+                  x={xPx}
+                  y={labelY}
+                  fill="#ffffff"
+                  fontSize="9"
+                  fontWeight="600"
+                  textAnchor="middle"
+                  fontFamily="var(--font-mono)"
+                >
                   {it.approxRelativeError!.toFixed(3)}%
                 </text>
               </g>

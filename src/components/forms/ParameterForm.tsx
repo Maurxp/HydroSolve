@@ -85,7 +85,7 @@ export const ParameterForm: React.FC<ParameterFormProps> = ({
   };
 
   return (
-    <div className="glass-card" style={{ padding: '1.75rem' }} id="panel-parametros">
+    <div className="glass-card" style={{ padding: 'clamp(1rem, 3vw, 1.75rem)' }} id="panel-parametros">
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <div style={{ background: 'rgba(6, 182, 212, 0.15)', padding: '0.5rem', borderRadius: 'var(--radius-md)', color: 'var(--cyan-400)' }}>
@@ -135,7 +135,7 @@ export const ParameterForm: React.FC<ParameterFormProps> = ({
       </div>
 
       {/* Formulario en Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.25rem' }}>
         {/* Q */}
         <div className="form-group">
           <label className="form-label" htmlFor="param-q">

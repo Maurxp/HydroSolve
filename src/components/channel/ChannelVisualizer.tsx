@@ -215,29 +215,45 @@ export const ChannelVisualizer: React.FC<ChannelVisualizerProps> = ({
             {/* Ticks verticales */}
             <line x1={bedLeftX} y1={bedY + 5} x2={bedLeftX} y2={bedY + 28} stroke="var(--cyan-400)" strokeWidth="1" strokeDasharray="2 2" />
             <line x1={bedRightX} y1={bedY + 5} x2={bedRightX} y2={bedY + 28} stroke="var(--cyan-400)" strokeWidth="1" strokeDasharray="2 2" />
-            <rect x={centerX - 42} y={bedY + 10} width="84" height="20" rx="4" fill="var(--bg-dark-900)" stroke="var(--card-border)" />
-            <text x={centerX} y={bedY + 24} fill="var(--text-primary)" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
+            <rect x={centerX - 44} y={bedY + 9} width="88" height="22" rx="4" fill="rgba(10, 17, 32, 0.95)" stroke="var(--cyan-400)" strokeWidth="1.3" />
+            <text x={centerX} y={bedY + 24} fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
               b = {formatNumber(b, 2)} m
             </text>
           </g>
 
           {/* Línea de cota para Tirante de agua y */}
           <g style={{ transition: 'all 0.35s ease-out' }}>
-            const dimX = bedRightX + 35;
             <line
-              x1={bedRightX + 35}
+              x1={Math.min(bedRightX + 35, svgWidth - 110)}
               y1={bedY}
-              x2={bedRightX + 35}
+              x2={Math.min(bedRightX + 35, svgWidth - 110)}
               y2={waterSurfaceY}
               stroke="var(--amber-400)"
               strokeWidth="1.5"
               markerStart="url(#arrowAmber)"
               markerEnd="url(#arrowAmber)"
             />
-            <line x1={bedRightX} y1={bedY} x2={bedRightX + 45} y2={bedY} stroke="var(--amber-400)" strokeWidth="1" strokeDasharray="2 2" />
-            <line x1={waterRightX} y1={waterSurfaceY} x2={bedRightX + 45} y2={waterSurfaceY} stroke="var(--amber-400)" strokeWidth="1" strokeDasharray="2 2" />
-            <rect x={bedRightX + 48} y={(bedY + waterSurfaceY) / 2 - 12} width="88" height="24" rx="4" fill="var(--bg-dark-900)" stroke="var(--amber-500)" />
-            <text x={bedRightX + 92} y={(bedY + waterSurfaceY) / 2 + 4} fill="var(--amber-300)" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
+            <line x1={bedRightX} y1={bedY} x2={Math.min(bedRightX + 45, svgWidth - 100)} y2={bedY} stroke="var(--amber-400)" strokeWidth="1" strokeDasharray="2 2" />
+            <line x1={waterRightX} y1={waterSurfaceY} x2={Math.min(bedRightX + 45, svgWidth - 100)} y2={waterSurfaceY} stroke="var(--amber-400)" strokeWidth="1" strokeDasharray="2 2" />
+            <rect
+              x={Math.min(bedRightX + 48, svgWidth - 96)}
+              y={(bedY + waterSurfaceY) / 2 - 12}
+              width="90"
+              height="24"
+              rx="4"
+              fill="rgba(10, 17, 32, 0.95)"
+              stroke="var(--amber-400)"
+              strokeWidth="1.3"
+            />
+            <text
+              x={Math.min(bedRightX + 48, svgWidth - 96) + 45}
+              y={(bedY + waterSurfaceY) / 2 + 5}
+              fill="#ffffff"
+              fontSize="12"
+              fontWeight="700"
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+            >
               y = {formatNumber(y, 3)} m
             </text>
           </g>
@@ -256,16 +272,31 @@ export const ChannelVisualizer: React.FC<ChannelVisualizerProps> = ({
             />
             <line x1={waterLeftX} y1={waterSurfaceY} x2={waterLeftX} y2={waterSurfaceY - 24} stroke="var(--cyan-300)" strokeWidth="1" strokeDasharray="2 2" />
             <line x1={waterRightX} y1={waterSurfaceY} x2={waterRightX} y2={waterSurfaceY - 24} stroke="var(--cyan-300)" strokeWidth="1" strokeDasharray="2 2" />
-            <rect x={centerX - 46} y={waterSurfaceY - 29} width="92" height="20" rx="4" fill="var(--bg-dark-900)" stroke="var(--card-border)" />
-            <text x={centerX} y={waterSurfaceY - 15} fill="var(--cyan-200)" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
+            <rect
+              x={centerX - 48}
+              y={Math.max(12, waterSurfaceY - 29)}
+              width="96"
+              height="22"
+              rx="4"
+              fill="rgba(10, 17, 32, 0.95)"
+              stroke="var(--cyan-400)"
+              strokeWidth="1.3"
+            />
+            <text
+              x={centerX}
+              y={Math.max(26, waterSurfaceY - 14)}
+              fill="#ffffff"
+              fontSize="11"
+              fontWeight="700"
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+            >
               T = {formatNumber(T, 2)} m
             </text>
           </g>
 
           {/* Triángulo indicador de talud 1 : z */}
           <g>
-            const slopeX = bankTopLeftX + 30;
-            const slopeY = bedY - (totalHeight * scale) * 0.45;
             <polyline
               points={`
                 ${bankTopLeftX + 25},${bedY - 60}
@@ -276,10 +307,10 @@ export const ChannelVisualizer: React.FC<ChannelVisualizerProps> = ({
               stroke="#94a3b8"
               strokeWidth="1.5"
             />
-            <text x={bankTopLeftX + 40} y={bedY - 66} fill="#cbd5e1" fontSize="10" textAnchor="middle" fontFamily="var(--font-mono)">
+            <text x={bankTopLeftX + 40} y={bedY - 66} fill="#ffffff" fontSize="10" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
               z = {formatNumber(z, 2)}
             </text>
-            <text x={bankTopLeftX + 63} y={bedY - 47} fill="#cbd5e1" fontSize="10" textAnchor="start" fontFamily="var(--font-mono)">
+            <text x={bankTopLeftX + 63} y={bedY - 47} fill="#ffffff" fontSize="10" fontWeight="600" textAnchor="start" fontFamily="var(--font-mono)">
               1
             </text>
           </g>

@@ -143,43 +143,25 @@ export const App: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Barra de Navegación Superior */}
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          background: 'rgba(6, 11, 19, 0.85)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(56, 189, 248, 0.12)',
-          padding: '0.75rem 0',
-        }}
-      >
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <div
-              style={{
-                background: 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)',
-                padding: '0.45rem',
-                borderRadius: 'var(--radius-md)',
-                color: '#ffffff',
-                boxShadow: '0 0 15px rgba(6, 182, 212, 0.4)',
-              }}
-            >
+      {/* Barra de Navegación Superior */}
+      <header className="app-header">
+        <div className="container header-container">
+          <div className="header-brand">
+            <div className="header-logo-icon">
               <Waves size={20} />
             </div>
             <div>
-              <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+              <span className="header-brand-title">
                 Hydro<span style={{ color: 'var(--cyan-400)' }}>Solve</span>
               </span>
-              <span style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-muted)', lineHeight: 1 }}>
+              <span className="header-brand-subtitle">
                 Laboratorio de Métodos Numéricos
               </span>
             </div>
           </div>
 
           {/* Enlaces de anclaje rápido */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+          <nav className="header-nav">
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => scrollToSection('panel-parametros')}>
               <Sliders size={13} /> Parámetros
             </button>
@@ -198,7 +180,7 @@ export const App: React.FC = () => {
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => scrollToSection('desarrollo-matematico')}>
               <BookOpen size={13} /> 15 Pasos
             </button>
-            <button type="button" className="btn btn-primary btn-sm" onClick={() => scrollToSection('panel-resultados')}>
+            <button type="button" className="btn btn-primary btn-sm nav-btn-highlight" onClick={() => scrollToSection('panel-resultados')}>
               <CheckCircle2 size={13} /> Resultados
             </button>
           </nav>
@@ -229,7 +211,7 @@ export const App: React.FC = () => {
           />
 
           {/* Fila: Sección del Canal SVG + Simulador y Tarjeta de Iteración Activa */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '1.75rem' }}>
+          <div className="dual-grid">
             <ChannelVisualizer
               params={params}
               currentDepth={currentDepth}
@@ -258,7 +240,7 @@ export const App: React.FC = () => {
           </div>
 
           {/* Fila: Gráficas Científicas A y B */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '1.75rem' }}>
+          <div className="dual-grid">
             <HydraulicFunctionChart
               params={params}
               currentIteration={activeIteration}

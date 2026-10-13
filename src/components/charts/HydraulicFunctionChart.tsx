@@ -81,6 +81,42 @@ export const HydraulicFunctionChart: React.FC<HydraulicFunctionChartProps> = ({
   const xrPx = mapX(xr);
   const fxrPx = mapY(fxr);
 
+  // Posicionamiento dinámico de etiquetas a y b (alto contraste, protección contra bordes)
+  const aBadgeWidth = 68;
+  const aBadgeHalfWidth = aBadgeWidth / 2;
+  const aLabelX = Math.max(margin.left + aBadgeHalfWidth + 2, Math.min(aPx, width - margin.right - aBadgeHalfWidth - 2));
+  const aLabelY = fa > 0 ? (faPx - 24 >= margin.top + 2 ? faPx - 24 : faPx + 8) : (faPx + 8 <= height - margin.bottom - 22 ? faPx + 8 : faPx - 24);
+
+  const bBadgeWidth = 68;
+  const bBadgeHalfWidth = bBadgeWidth / 2;
+  const bLabelX = Math.max(margin.left + bBadgeHalfWidth + 2, Math.min(bPx, width - margin.right - bBadgeHalfWidth - 2));
+  const bLabelY = fb > 0 ? (fbPx - 24 >= margin.top + 2 ? fbPx - 24 : fbPx + 8) : (fbPx + 8 <= height - margin.bottom - 22 ? fbPx + 8 : fbPx - 24);
+
+  // Posicionamiento dinámico de etiqueta xr para evitar solapamientos con (xr, f(xr)), ejes y bordes
+  const xrBadgeWidth = 114;
+  const xrBadgeHeight = 22;
+  const xrBadgeHalfWidth = xrBadgeWidth / 2;
+  const minBadgeX = margin.left + xrBadgeHalfWidth + 4;
+  const maxBadgeX = width - margin.right - xrBadgeHalfWidth - 4;
+  const xrLabelX = Math.max(minBadgeX, Math.min(xrPx, maxBadgeX));
+
+  let xrBadgeY: number;
+  if (fxrPx >= zeroY) {
+    // El punto en la curva está por debajo de la línea cero (fxr <= 0). Ubicar etiqueta xr ARRIBA de la línea cero.
+    if (zeroY - 26 >= margin.top + 4) {
+      xrBadgeY = zeroY - 26;
+    } else {
+      xrBadgeY = Math.min(height - margin.bottom - xrBadgeHeight - 4, Math.max(zeroY + 14, fxrPx + 14));
+    }
+  } else {
+    // El punto en la curva está por arriba de la línea cero (fxr > 0). Ubicar etiqueta xr ABAJO de la línea cero.
+    if (zeroY + 14 + xrBadgeHeight <= height - margin.bottom - 4) {
+      xrBadgeY = zeroY + 14;
+    } else {
+      xrBadgeY = Math.max(margin.top + 4, Math.min(zeroY - 26, fxrPx - 26));
+    }
+  }
+
   return (
     <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }} id="grafica-funcion">
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -183,22 +219,92 @@ export const HydraulicFunctionChart: React.FC<HydraulicFunctionChartProps> = ({
           <line x1={aPx} y1={faPx} x2={aPx} y2={zeroY} stroke="rgba(245, 158, 11, 0.4)" strokeWidth="1" strokeDasharray="3 3" />
           <line x1={bPx} y1={fbPx} x2={bPx} y2={zeroY} stroke="rgba(245, 158, 11, 0.4)" strokeWidth="1" strokeDasharray="3 3" />
 
-          {/* Puntos (a, f(a)) y (b, f(b)) */}
+          {/* Puntos (a, f(a)) y (b, f(b)) con etiquetas de alto contraste */}
           <circle cx={aPx} cy={faPx} r="5" fill="var(--amber-400)" stroke="var(--bg-dark-900)" strokeWidth="2" />
-          <text x={aPx} y={fa > 0 ? faPx - 10 : faPx + 16} fill="var(--amber-300)" fontSize="10" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
+          <rect
+            x={aLabelX - aBadgeHalfWidth}
+            y={aLabelY}
+            width={aBadgeWidth}
+            height="18"
+            rx="4"
+            fill="rgba(10, 17, 32, 0.94)"
+            stroke="var(--amber-400)"
+            strokeWidth="1.2"
+          />
+          <text
+            x={aLabelX}
+            y={aLabelY + 13}
+            fill="#ffffff"
+            fontSize="10"
+            fontWeight="700"
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+          >
             a ({formatNumber(a, 2)})
           </text>
 
           <circle cx={bPx} cy={fbPx} r="5" fill="var(--amber-400)" stroke="var(--bg-dark-900)" strokeWidth="2" />
-          <text x={bPx} y={fb > 0 ? fbPx - 10 : fbPx + 16} fill="var(--amber-300)" fontSize="10" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
+          <rect
+            x={bLabelX - bBadgeHalfWidth}
+            y={bLabelY}
+            width={bBadgeWidth}
+            height="18"
+            rx="4"
+            fill="rgba(10, 17, 32, 0.94)"
+            stroke="var(--amber-400)"
+            strokeWidth="1.2"
+          />
+          <text
+            x={bLabelX}
+            y={bLabelY + 13}
+            fill="#ffffff"
+            fontSize="10"
+            fontWeight="700"
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+          >
             b ({formatNumber(b, 2)})
           </text>
 
           {/* Punto de intersección de la secante con f(y)=0: xr */}
           <circle cx={xrPx} cy={zeroY} r="7" fill="var(--emerald-400)" stroke="var(--bg-dark-900)" strokeWidth="2.5" />
-          <text x={xrPx} y={zeroY + 18} fill="var(--emerald-300)" fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
-            x_r = {formatNumber(xr, 3)} m
-          </text>
+
+          {/* Etiqueta xr con posicionamiento inteligente anti-solapamiento */}
+          <g style={{ transition: 'all 0.3s ease-out' }}>
+            {Math.abs(xrLabelX - xrPx) > 8 && (
+              <line
+                x1={xrPx}
+                y1={zeroY}
+                x2={xrLabelX}
+                y2={xrBadgeY + xrBadgeHeight / 2}
+                stroke="var(--emerald-400)"
+                strokeWidth="1"
+                strokeDasharray="2 2"
+                opacity="0.6"
+              />
+            )}
+            <rect
+              x={xrLabelX - xrBadgeHalfWidth}
+              y={xrBadgeY}
+              width={xrBadgeWidth}
+              height={xrBadgeHeight}
+              rx="5"
+              fill="rgba(10, 17, 32, 0.95)"
+              stroke="var(--emerald-400)"
+              strokeWidth="1.4"
+            />
+            <text
+              x={xrLabelX}
+              y={xrBadgeY + 15}
+              fill="#ffffff"
+              fontSize="11"
+              fontWeight="700"
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+            >
+              x_r = {formatNumber(xr, 3)} m
+            </text>
+          </g>
 
           {/* Punto en la curva (xr, f(xr)) */}
           <circle cx={xrPx} cy={fxrPx} r="4.5" fill="var(--cyan-300)" stroke="var(--bg-dark-900)" strokeWidth="1.5" />

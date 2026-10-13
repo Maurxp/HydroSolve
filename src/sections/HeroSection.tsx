@@ -10,7 +10,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
     <section
       style={{
         position: 'relative',
-        padding: '4rem 0 3rem 0',
+        padding: 'clamp(2rem, 4.5vw, 3.75rem) 0 clamp(1.5rem, 3.5vw, 2.75rem) 0',
         borderBottom: '1px solid rgba(56, 189, 248, 0.12)',
         overflow: 'hidden',
       }}
@@ -18,7 +18,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
     >
       <div className="container">
         {/* Badges superiores */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
           <span className="badge badge-cyan">
             <Binary size={13} /> Métodos Numéricos & Análisis Matemático
           </span>
@@ -34,11 +34,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
         <div style={{ maxWidth: '900px' }}>
           <h1
             style={{
-              fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
+              fontSize: 'clamp(1.65rem, 4.2vw, 3.2rem)',
               fontWeight: 800,
               letterSpacing: '-0.03em',
-              lineHeight: 1.15,
-              marginBottom: '1rem',
+              lineHeight: 1.18,
+              marginBottom: '0.85rem',
               background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -49,10 +49,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
 
           <p
             style={{
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+              fontSize: 'clamp(0.95rem, 2.2vw, 1.3rem)',
               color: 'var(--cyan-300)',
               fontWeight: 500,
-              marginBottom: '1.25rem',
+              marginBottom: '1.15rem',
               lineHeight: 1.4,
             }}
           >
@@ -61,10 +61,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
 
           <p
             style={{
-              fontSize: '1rem',
+              fontSize: 'clamp(0.88rem, 1.8vw, 1rem)',
               color: 'var(--text-secondary)',
-              lineHeight: 1.7,
-              marginBottom: '2rem',
+              lineHeight: 1.65,
+              marginBottom: '1.75rem',
               maxWidth: '820px',
             }}
           >
@@ -72,12 +72,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
           </p>
 
           {/* Botones de acción rápida */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
             <button
               type="button"
               className="btn btn-primary"
               onClick={onStartSimulation}
-              style={{ padding: '0.85rem 1.75rem', fontSize: '1rem' }}
+              style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem' }}
             >
               <Activity size={18} /> Iniciar Simulación Numérica
             </button>
@@ -85,7 +85,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
             <a
               href="#desarrollo-matematico"
               className="btn btn-secondary"
-              style={{ padding: '0.85rem 1.5rem', fontSize: '1rem' }}
+              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem' }}
             >
               Ver Desarrollo Matemático (15 Pasos)
             </a>
@@ -93,7 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
             <a
               href="#fundamentos-teoricos"
               className="btn btn-secondary"
-              style={{ padding: '0.85rem 1.5rem', fontSize: '1rem' }}
+              style={{ padding: '0.75rem 1.35rem', fontSize: '0.95rem' }}
             >
               Fundamentos Teóricos
             </a>
@@ -104,34 +104,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartSimulation }) =
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
             gap: '1rem',
-            marginTop: '3rem',
+            marginTop: '2.5rem',
           }}
         >
-          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
+          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.15rem' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--cyan-400)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
               El Problema Físico
             </div>
-            <div style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               Determinar el tirante y tal que el caudal conducido sea exactamente <strong>Q = 12 m³/s</strong> en un canal de concreto (<strong>n = 0.025</strong>) con pendiente <strong>S = 0.001</strong>.
             </div>
           </div>
 
-          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
+          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.15rem' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--emerald-400)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
               El Modelo Matemático
             </div>
-            <div style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               La ecuación de Manning f(y) = (1/n) A R^(2/3) √S − Q = 0 genera una función no lineal implícita con potencias fraccionarias sin despeje algebraico directo.
             </div>
           </div>
 
-          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
+          <div style={{ background: 'rgba(14, 23, 42, 0.75)', border: '1px solid var(--card-border)', borderRadius: 'var(--radius-md)', padding: '1.15rem' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--amber-400)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
               El Método Numérico
             </div>
-            <div style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               Regula Falsi interpola linealmente los extremos del intervalo [a, b₀] = [1.0, 2.0] m hasta alcanzar una tolerancia de error relativo <strong>ε &lt; 0.01%</strong>.
             </div>
           </div>
