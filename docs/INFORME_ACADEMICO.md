@@ -134,26 +134,26 @@ Tras calcular $x_r$ y evaluar $f(x_r)$:
 
 ```mermaid
 flowchart TD
-    Inicio([Inicio]) --> Entradas[Leer Q, b, z, S, n, a, b₀, εs, maxIter]
-    Entradas --> Validar{¿Parámetros físicamente válidos?}
-    Validar -- No --> ErrorVal[Reportar parámetros inválidos] --> Fin([Fin])
-    Validar -- Sí --> EvalExtremos[Calcular f(a) y f(b₀)]
-    EvalExtremos --> Bolzano{¿f(a) · f(b₀) < 0?}
-    Bolzano -- No --> ErrorSigno[Sin cambio de signo: raíz no acotada] --> Fin
-    Bolzano -- Sí --> InitVars[i = 1, prevXr = null]
-    InitVars --> Ciclo{¿i <= maxIter?}
-    Ciclo -- No --> MaxAlcanzado[Finalizar: límite de iteraciones] --> Fin
-    Ciclo -- Sí --> Interpolar["xr = b - (f(b)*(a - b)) / (f(a) - f(b))"]
-    Interpolar --> EvalFxr[Evaluar f(xr) con Manning]
-    EvalFxr --> CondError{¿i == 1?}
-    CondError -- Sí --> ErrNA["εa = N/A"] --> EvalParada
-    CondError -- No --> ErrCalc["εa = |(xr - prevXr) / xr| * 100%"] --> EvalParada
-    EvalParada{¿|f(xr)| < 1e-12 o εa <= εs?}
-    EvalParada -- Sí --> Convergencia[Convergencia alcanzada: yn = xr] --> Resultados[Presentar resultados] --> Fin
-    EvalParada -- No --> Actualizar{¿f(b) · f(xr) < 0?}
-    Actualizar -- Sí --> MoverA[a = xr]
-    Actualizar -- No --> MoverB[b = xr]
-    MoverA --> SigPaso[prevXr = xr, i = i + 1] --> Ciclo
+    Inicio(["Inicio"]) --> Entradas["Leer Q, b, z, S, n, a, b₀, εs, maxIter"]
+    Entradas --> Validar{"¿Parámetros físicamente válidos?"}
+    Validar -->|No| ErrorVal["Reportar parámetros inválidos"] --> Fin(["Fin"])
+    Validar -->|Sí| EvalExtremos["Calcular f(a) y f(b₀)"]
+    EvalExtremos --> Bolzano{"¿f(a) · f(b₀) < 0?"}
+    Bolzano -->|No| ErrorSigno["Sin cambio de signo: raíz no acotada"] --> Fin
+    Bolzano -->|Sí| InitVars["i = 1, prevXr = null"]
+    InitVars --> Ciclo{"¿i <= maxIter?"}
+    Ciclo -->|No| MaxAlcanzado["Finalizar: límite de iteraciones"] --> Fin
+    Ciclo -->|Sí| Interpolar["xr = b - (f(b)*(a - b)) / (f(a) - f(b))"]
+    Interpolar --> EvalFxr["Evaluar f(xr) con Manning"]
+    EvalFxr --> CondError{"¿i == 1?"}
+    CondError -->|Sí| ErrNA["εa = N/A"] --> EvalParada
+    CondError -->|No| ErrCalc["εa = |(xr - prevXr) / xr| * 100%"] --> EvalParada
+    EvalParada{"¿|f(xr)| < 1e-12 o εa <= εs?"}
+    EvalParada -->|Sí| Convergencia["Convergencia alcanzada: yn = xr"] --> Resultados["Presentar resultados"] --> Fin
+    EvalParada -->|No| Actualizar{"¿f(b) · f(xr) < 0?"}
+    Actualizar -->|Sí| MoverA["a = xr"]
+    Actualizar -->|No| MoverB["b = xr"]
+    MoverA --> SigPaso["prevXr = xr, i = i + 1"] --> Ciclo
     MoverB --> SigPaso
 ```
 
